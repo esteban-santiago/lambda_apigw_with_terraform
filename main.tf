@@ -77,6 +77,7 @@ resource "aws_lambda_function" "terraform_lambda_function" {
 
 resource "aws_apigatewayv2_api" "hello-api" {
   name          = "v2-http-api"
+  description = "Hello world python lambda function using terraform"
   protocol_type = "HTTP"
 }
 
@@ -106,16 +107,4 @@ resource "aws_lambda_permission" "api-gw" {
   function_name = aws_lambda_function.terraform_lambda_function.arn
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.hello-api.execution_arn}/*/*/*"
-}
-
-output "terraform_aws_role_output" {
-  value = aws_iam_role.lambda_role.name
-}
-
-output "terraform_aws_role_arn_output" {
-  value = aws_iam_role.lambda_role.arn
-}
-
-output "terraform_aws_logging_arn_output" {
-  value = aws_iam_policy.iam_policy_for_lambda.arn
 }
